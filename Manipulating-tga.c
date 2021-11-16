@@ -8,6 +8,6 @@ int main()
         printf("ERROR, UNABLE TO OPEN FILE.");
         fclose(ptr);
     }
-
+    
     return 0;
 }
