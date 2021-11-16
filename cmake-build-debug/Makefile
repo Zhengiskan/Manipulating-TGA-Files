@@ -153,30 +153,6 @@ Manipulating-tga.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.s
 .PHONY : Manipulating-tga.c.s
 
-main.o: main.c.o
-.PHONY : main.o
-
-# target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/main.c.o
-.PHONY : main.c.o
-
-main.i: main.c.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/main.c.i
-.PHONY : main.c.i
-
-main.s: main.c.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/main.c.s
-.PHONY : main.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,9 +165,6 @@ help:
 	@echo "... Manipulating-tga.o"
 	@echo "... Manipulating-tga.i"
 	@echo "... Manipulating-tga.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 .PHONY : help
 
 

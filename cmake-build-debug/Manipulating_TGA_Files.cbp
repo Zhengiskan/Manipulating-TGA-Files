@@ -83,9 +83,6 @@
 		<Unit filename="/Users/r13_2014/Desktop/zhen&apos;s/Projects and idea/Manipulating-TGA-Files/Manipulating-tga.c">
 			<Option target="Manipulating_TGA_Files"/>
 		</Unit>
-		<Unit filename="/Users/r13_2014/Desktop/zhen&apos;s/Projects and idea/Manipulating-TGA-Files/main.c">
-			<Option target="Manipulating_TGA_Files"/>
-		</Unit>
 		<Unit filename="/Users/r13_2014/Desktop/zhen&apos;s/Projects and idea/Manipulating-TGA-Files/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

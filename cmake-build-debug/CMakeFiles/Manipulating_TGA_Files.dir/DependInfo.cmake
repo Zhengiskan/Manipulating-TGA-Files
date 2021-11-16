@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/Manipulating-tga.c" "/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.o"
-  "/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/main.c" "/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/Manipulating_TGA_Files.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.o CMakeFiles/Manipulating_TGA_Files.dir/main.c.o -o Manipulating_TGA_Files 
+/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.o -o Manipulating_TGA_Files 
