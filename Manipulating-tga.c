@@ -1,10 +1,9 @@
 #include <stdio.h>
-
 int main()
 {
     char buffer[10];
     FILE *ptr;
-    ptr = fopen("sample1.tga", "wb");
+    ptr = fopen("sample1.tga", "rb");
     if (ptr == NULL) {
         printf("ERROR, UNABLE TO OPEN FILE.");
         fclose(ptr);

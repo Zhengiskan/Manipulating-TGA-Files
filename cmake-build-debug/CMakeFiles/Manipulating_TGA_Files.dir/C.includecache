@@ -7,16 +7,12 @@
 #IncludeRegexTransform: 
 
 /Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/Manipulating-tga.c
-stdint.h
--
 stdio.h
+-
+stdlib.h
 -
 string.h
 -
-tgafunc.h
-/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/tgafunc.h
-
-/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/tgafunc.h
 stdint.h
 -
 
