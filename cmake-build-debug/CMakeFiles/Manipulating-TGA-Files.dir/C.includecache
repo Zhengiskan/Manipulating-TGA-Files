@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/Manipulating-tga.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+
