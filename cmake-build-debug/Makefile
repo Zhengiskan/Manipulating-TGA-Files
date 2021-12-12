@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Manipulating_TGA_Files
+# Target rules for targets named Manipulating-TGA-Files
 
 # Build rule for target.
-Manipulating_TGA_Files: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Manipulating_TGA_Files
-.PHONY : Manipulating_TGA_Files
+Manipulating-TGA-Files: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Manipulating-TGA-Files
+.PHONY : Manipulating-TGA-Files
 
 # fast build rule for target.
-Manipulating_TGA_Files/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/build
-.PHONY : Manipulating_TGA_Files/fast
+Manipulating-TGA-Files/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating-TGA-Files.dir/build.make CMakeFiles/Manipulating-TGA-Files.dir/build
+.PHONY : Manipulating-TGA-Files/fast
 
 Manipulating-tga.o: Manipulating-tga.c.o
 .PHONY : Manipulating-tga.o
 
 # target to build an object file
 Manipulating-tga.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating-TGA-Files.dir/build.make CMakeFiles/Manipulating-TGA-Files.dir/Manipulating-tga.c.o
 .PHONY : Manipulating-tga.c.o
 
 Manipulating-tga.i: Manipulating-tga.c.i
@@ -142,7 +142,7 @@ Manipulating-tga.i: Manipulating-tga.c.i
 
 # target to preprocess a source file
 Manipulating-tga.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating-TGA-Files.dir/build.make CMakeFiles/Manipulating-TGA-Files.dir/Manipulating-tga.c.i
 .PHONY : Manipulating-tga.c.i
 
 Manipulating-tga.s: Manipulating-tga.c.s
@@ -150,7 +150,7 @@ Manipulating-tga.s: Manipulating-tga.c.s
 
 # target to generate assembly for a file
 Manipulating-tga.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating_TGA_Files.dir/build.make CMakeFiles/Manipulating_TGA_Files.dir/Manipulating-tga.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Manipulating-TGA-Files.dir/build.make CMakeFiles/Manipulating-TGA-Files.dir/Manipulating-tga.c.s
 .PHONY : Manipulating-tga.c.s
 
 # Help Target
@@ -161,7 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Manipulating_TGA_Files"
+	@echo "... Manipulating-TGA-Files"
 	@echo "... Manipulating-tga.o"
 	@echo "... Manipulating-tga.i"
 	@echo "... Manipulating-tga.s"

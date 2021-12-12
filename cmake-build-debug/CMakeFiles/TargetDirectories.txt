@@ -1,3 +1,3 @@
 /Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/Manipulating_TGA_Files.dir
+/Users/r13_2014/Desktop/zhen's/Projects and idea/Manipulating-TGA-Files/cmake-build-debug/CMakeFiles/Manipulating-TGA-Files.dir
