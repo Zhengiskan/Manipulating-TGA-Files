@@ -5,6 +5,25 @@
 
 typedef uint8_t ubyte;
 
+typedef struct {
+    char  idlength;
+    char  colourmaptype;
+    char  datatypecode;
+    short int colourmaporigin;
+    short int colourmaplength;
+    char  colourmapdepth;
+    short int x_origin;
+    short int y_origin;
+    short width;
+    short height;
+    char  bitsperpixel;
+    char  imagedescriptor;
+} HEADER;
+
+typedef struct {
+    unsigned char r,g,b,a;
+} PIXEL;
+
 struct Pixel_arr {
     ubyte* data;
     size_t width;
@@ -16,6 +35,7 @@ typedef struct Pixel_arr PixelArray;
 
 int main()
 {
+    HEADER header;
     FILE* fp = fopen("Font.tga", "rb");
     FILE* outfile = NULL;
     if (fp == NULL) {
@@ -23,9 +43,34 @@ int main()
         return -1;
     }
 
+    header.idlength = fgetc(fp);
+    fprintf(stdout,"ID length:         %d\n",header.idlength);
+    header.colourmaptype = fgetc(fp);
+    fprintf(stdout,"Colourmap type:    %d\n",header.colourmaptype);
+    header.datatypecode = fgetc(fp);
+    fprintf(stdout,"Image type:        %d\n",header.datatypecode);
+    fread(&header.colourmaporigin,2,1,fp);
+    fprintf(stdout,"Colour map offset: %d\n",header.colourmaporigin);
+    fread(&header.colourmaplength,2,1,fp);
+    fprintf(stdout,"Colour map length: %d\n",header.colourmaplength);
+    header.colourmapdepth = fgetc(fp);
+    fprintf(stdout,"Colour map depth:  %d\n",header.colourmapdepth);
+    fread(&header.x_origin,2,1,fp);
+    fprintf(stdout,"X origin:          %d\n",header.x_origin);
+    fread(&header.y_origin,2,1,fp);
+    fprintf(stdout,"Y origin:          %d\n",header.y_origin);
+    fread(&header.width,2,1,fp);
+    fprintf(stdout,"Width:             %d\n",header.width);
+    fread(&header.height,2,1,fp);
+    fprintf(stdout,"Height:            %d\n",header.height);
+    header.bitsperpixel = fgetc(fp);
+    fprintf(stdout,"Bits per pixel:    %d\n",header.bitsperpixel);
+    header.imagedescriptor = fgetc(fp);
+    fprintf(stdout,"Descriptor:        %d\n",header.imagedescriptor);
+    printf("Starting Image manipulation........\n");
+
     fseek(fp, 0, SEEK_END);
     size_t fsize = ftell(fp);
-    // errno;
 
     fseek(fp, 0, SEEK_SET);
     ubyte* data = (ubyte*)malloc(fsize);
@@ -77,9 +122,13 @@ int main()
     outfile = fopen("./test.tga", "wb");
     fwrite(buffer, 1, sizeof(buffer), outfile);
     fwrite(pix.data, 1, image_size, outfile);
+    goto finish;
 
     done:
     fclose(outfile);
+
+    finish:
+    printf("Process finished, Thank you for using our service.\n");
 
     free(pix.data);
     free(data);
