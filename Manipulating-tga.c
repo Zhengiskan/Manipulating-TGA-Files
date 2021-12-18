@@ -16,9 +16,6 @@ typedef struct Pixel_arr PixelArray;
 
 int main()
 {
-    char c; // 1 byte
-    unsigned char u; // 1 byte
-
     FILE* fp = fopen("Font.tga", "rb");
     FILE* outfile = NULL;
     if (fp == NULL) {
@@ -53,6 +50,8 @@ int main()
     pix.width = data[12] + (data[13] << 8);
     pix.height = data[14] + (data[15] << 8);
     pix.format = data[16];
+    int data_type_field = data[3];
+
     if (pix.format != 24) {
         fprintf(stderr, "unsupported tga format\n");
         goto done;
@@ -74,7 +73,7 @@ int main()
     buffer[14] = pix.height;
     buffer[15] = pix.height >> 8;
     buffer[16] = pix.format;
-
+    
     outfile = fopen("./test.tga", "wb");
     fwrite(buffer, 1, sizeof(buffer), outfile);
     fwrite(pix.data, 1, image_size, outfile);
