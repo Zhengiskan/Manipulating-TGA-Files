@@ -97,7 +97,6 @@ int main()
     pix.width = data[12] + (data[13] << 8);
     pix.height = data[14] + (data[15] << 8);
     pix.format = data[16];
-    int data_type_field = data[3];
 
     if (pix.format != 24) {
         fprintf(stderr, "Unsupported TGA file format, this program only support 24-bit image files.\n");
