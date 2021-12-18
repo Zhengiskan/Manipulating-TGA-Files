@@ -47,28 +47,40 @@ int main()
 
     header.idlength = fgetc(fp);
     fprintf(stdout,"ID length:         %d\n",header.idlength);
+
     header.colourmaptype = fgetc(fp);
     fprintf(stdout,"Colourmap type:    %d\n",header.colourmaptype);
+
     header.datatypecode = fgetc(fp);
     fprintf(stdout,"Image type:        %d\n",header.datatypecode);
+
     fread(&header.colourmaporigin,2,1,fp);
     fprintf(stdout,"Colour map offset: %d\n",header.colourmaporigin);
+
     fread(&header.colourmaplength,2,1,fp);
     fprintf(stdout,"Colour map length: %d\n",header.colourmaplength);
+
     header.colourmapdepth = fgetc(fp);
     fprintf(stdout,"Colour map depth:  %d\n",header.colourmapdepth);
+
     fread(&header.x_origin,2,1,fp);
     fprintf(stdout,"X origin:          %d\n",header.x_origin);
+
     fread(&header.y_origin,2,1,fp);
     fprintf(stdout,"Y origin:          %d\n",header.y_origin);
+
     fread(&header.width,2,1,fp);
     fprintf(stdout,"Width:             %d\n",header.width);
+
     fread(&header.height,2,1,fp);
     fprintf(stdout,"Height:            %d\n",header.height);
+
     header.bitsperpixel = fgetc(fp);
     fprintf(stdout,"Bits per pixel:    %d\n",header.bitsperpixel);
+
     header.imagedescriptor = fgetc(fp);
     fprintf(stdout,"Descriptor:        %d\n",header.imagedescriptor);
+
     printf("Starting Image manipulation........\n");
 
     fseek(fp, 0, SEEK_END);
