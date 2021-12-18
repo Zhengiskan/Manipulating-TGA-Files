@@ -21,7 +21,10 @@ typedef struct {
 } HEADER;
 
 typedef struct {
-    unsigned char r,g,b,a;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+    unsigned char a;
 } PIXEL;
 
 struct Pixel_arr {
