@@ -36,6 +36,8 @@ typedef struct Pixel_arr PixelArray;
 int main()
 {
     HEADER header;
+    PIXEL *pixels = NULL;
+
     FILE* fp = fopen("Font.tga", "rb");
     FILE* outfile = NULL;
     if (fp == NULL) {
