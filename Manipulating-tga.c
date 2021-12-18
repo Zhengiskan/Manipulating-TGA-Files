@@ -19,7 +19,7 @@ int main()
     FILE* fp = fopen("Font.tga", "rb");
     FILE* outfile = NULL;
     if (fp == NULL) {
-        fprintf(stderr, "cannot open file\n");
+        fprintf(stderr, "Cannot open File, please check your file name and directory.\n");
         return -1;
     }
 
@@ -37,13 +37,13 @@ int main()
 
     int res = fread(data, 1, fsize, fp);
     if (res < fsize) {
-        fprintf(stderr, "invalid tga file\n");
+        fprintf(stderr, "Invalid TGA file, sizing is incorrect.\n");
         goto done;
     }
 
     res = memcmp(tga_sig, data, sizeof(tga_sig));
     if (res != 0) {
-        fprintf(stderr, "invalid tga file\n");
+        fprintf(stderr, "Invalid TGA file, please check file.\n");
         goto done;
     }
 
@@ -53,13 +53,13 @@ int main()
     int data_type_field = data[3];
 
     if (pix.format != 24) {
-        fprintf(stderr, "unsupported tga format\n");
+        fprintf(stderr, "Unsupported TGA file format, this program only support 24-bit image files.\n");
         goto done;
     }
 
     size_t image_size = pix.width * pix.height * pix.format / 8;
     if ((tga_header_size + image_size) > fsize) {
-        fprintf(stderr, "invalid tga file size\n");
+        fprintf(stderr, "Invalid TGA file size.\n");
         goto done;
     }
 
@@ -73,7 +73,7 @@ int main()
     buffer[14] = pix.height;
     buffer[15] = pix.height >> 8;
     buffer[16] = pix.format;
-    
+
     outfile = fopen("./test.tga", "wb");
     fwrite(buffer, 1, sizeof(buffer), outfile);
     fwrite(pix.data, 1, image_size, outfile);
