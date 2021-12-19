@@ -36,10 +36,30 @@ struct Pixel_arr {
 
 typedef struct Pixel_arr PixelArray;
 
+void MergeBytes(PIXEL *pixel,unsigned char *p,int bytes)
+{
+    if (bytes == 4) {
+        pixel->r = p[2];
+        pixel->g = p[1];
+        pixel->b = p[0];
+        pixel->a = p[3];
+    } else if (bytes == 3) {
+        pixel->r = p[2];
+        pixel->g = p[1];
+        pixel->b = p[0];
+        pixel->a = 255;
+    } else if (bytes == 2) {
+        pixel->r = (p[1] & 0x7c) << 1;
+        pixel->g = ((p[1] & 0x03) << 6) | ((p[0] & 0xe0) >> 2);
+        pixel->b = (p[0] & 0x1f) << 3;
+        pixel->a = (p[1] & 0x80);
+    }
+}
+
 int main()
 {
     HEADER header;
-    PIXEL *pixels = NULL;
+    PIXEL *pixels;
 
     FILE* fp = fopen("Font.tga", "rb");
     FILE* outfile = NULL;
@@ -86,6 +106,21 @@ int main()
 
     printf("Starting Image manipulation........\n");
 
+    pixels = malloc(header.width*header.height*sizeof(PIXEL));
+
+    for (int i=0;i<header.width*header.height;i++) {
+        pixels[i].r = 0;
+        pixels[i].g = 0;
+        pixels[i].b = 0;
+        pixels[i].a = 0;
+//        printf("R: %d; G: %d; B: %d\n", pixels->r, pixels->g, pixels->b);
+    }
+
+    int num_bytes;
+    int n = 0;
+    unsigned char p[5];
+
+    fseek(fp, 0, SEEK_SET);
     fseek(fp, 0, SEEK_END);
     size_t fsize = ftell(fp);
 
@@ -123,22 +158,59 @@ int main()
         fprintf(stderr, "Invalid TGA file size.\n");
         goto done;
     }
+    fseek(fp, 0, SEEK_SET);
+    num_bytes = header.bitsperpixel / 8;
+    while (n < header.width * header.height) {
+        if (header.datatypecode == 2) {                     /* Uncompressed */
+            if (fread(p, 1, num_bytes, fp) != num_bytes) {
+                fprintf(stderr, "Unexpected end of file\n");
+                exit(-1);
+            }
+            MergeBytes(&(pixels[n]), p, num_bytes);
+            n++;
+        }
+    }
 
-    pix.data = (ubyte*)malloc(image_size);
-    memcpy(pix.data, data + 18, image_size);
+    if ((outfile = fopen("tgatest.tga","w")) == NULL) {
+        fprintf(stderr,"Failed to open output file\n");
+        exit(-1);
+    }
+    putc(0,outfile);
+    putc(0,outfile);
+    putc(2,outfile);                         /* uncompressed RGB */
+    putc(0,outfile); putc(0,outfile);
+    putc(0,outfile); putc(0,outfile);
+    putc(0,outfile);
+    putc(0,outfile); putc(0,outfile);           /* X origin */
+    putc(0,outfile); putc(0,outfile);           /* y origin */
+    putc((header.width & 0x00FF),outfile);
+    putc((header.width & 0xFF00) / 256,outfile);
+    putc((header.height & 0x00FF),outfile);
+    putc((header.height & 0xFF00) / 256,outfile);
+    putc(32,outfile);                        /* 24 bit bitmap */
+    putc(0,outfile);
+    for (int i=0;i<header.height*header.width;i++) {
+        putc(pixels[i].b,outfile);
+        putc(pixels[i].g,outfile);
+        putc(pixels[i].r,outfile);
+        putc(pixels[i].a,outfile);
+    }
 
-    ubyte buffer[18] = {};
-    memcpy(buffer, tga_sig, sizeof(tga_sig));
-    buffer[12] = pix.width;
-    buffer[13] = pix.width >> 8;
-    buffer[14] = pix.height;
-    buffer[15] = pix.height >> 8;
-    buffer[16] = pix.format;
-
-    outfile = fopen("./test.tga", "wb");
-    fwrite(buffer, 1, sizeof(buffer), outfile);
-    fwrite(pix.data, 1, image_size, outfile);
-    goto finish;
+//    pix.data = (ubyte*)malloc(image_size);
+//    memcpy(pix.data, data + 18, image_size);
+//
+//    ubyte buffer[18] = {};
+//    memcpy(buffer, tga_sig, sizeof(tga_sig));
+//    buffer[12] = pix.width;
+//    buffer[13] = pix.width >> 8;
+//    buffer[14] = pix.height;
+//    buffer[15] = pix.height >> 8;
+//    buffer[16] = pix.format;
+//
+//    outfile = fopen("./test.tga", "wb");
+//    fwrite(buffer, 1, sizeof(buffer), outfile);
+//    fwrite(pix.data, 1, image_size, outfile);
+//    goto finish;
 
     done:
     fclose(outfile);
