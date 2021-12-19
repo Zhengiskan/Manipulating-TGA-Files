@@ -61,7 +61,7 @@ int main()
     HEADER header;
     PIXEL *pixels;
 
-    FILE* fp = fopen("Font.tga", "rb");
+    FILE* fp = fopen("mountain.tga", "rb");
     FILE* outfile = NULL;
     if (fp == NULL) {
         fprintf(stderr, "Cannot open File, please check your file name and directory.\n");
@@ -163,29 +163,44 @@ int main()
            "[1]: Swap Red with Green\n"
            "[2]: Swap Red with Blue\n"
            "[3]: Swap Green with Blue\n"
-           "[4]: Change Red to different color.\n"
-           "[5]: Swap Specific Color with another Specific Color\n");
+           "[4]: Change Red to different color\n"
+           "[5]: Swap Specific Color with another Specific Color\n"
+           "[6]: Darken Image\n"
+           "[7]: Lighten Image\n");
     scanf("%d", &option);
 
     int target_r, target_g, target_b, self_r, self_g, self_b;
+    double dl_value;
 
     if (option == 4){
-        printf("Enter a color code in RGB order that you wish to change red to:\nEx:lime: 0 255 0\n");
+        printf("Enter a color code in RGB order that you wish to change red to:\n"
+               "Color in RGB code available at:https://htmlcolorcodes.com\nEx:lime: 0 255 0\n");
         scanf("%d %d %d", &target_r, &target_g, &target_b);
     }
 
     if (option == 5){
         printf("Enter a color code in RGB order that you wish to change:\nEx:lime: 0 255 0\n");
         scanf("%d %d %d", &self_r, &self_g, &self_b);
-        printf("Enter a color code in RGB order that you wish to change the color to:\nEx:lime: 0 255 0\n");
+        printf("Enter a color code in RGB order that you wish to change the color to:\n"
+               "Color in RGB code available at:https://htmlcolorcodes.com\nEx:lime: 0 255 0\n");
         scanf("%d %d %d", &target_r, &target_g, &target_b);
+    }
+
+    if (option == 6 || option == 7){
+        if (option==6){ printf("Enter the amount of percent of light you wish to darken the image:\n"
+                               "Please refrain from inputting high number 5-10 is best\n"
+                               "Ex: For 5 percent input 5\n");}
+        else if (option==7){printf("Enter the amount of percent of light you wish to lighten the image:\n"
+                                   "Ex: For 5 percent input 5\n");}
+        scanf("%lf", &dl_value);
+        dl_value = dl_value * 0.10;
     }
 
     if (pixel_info_ticker != 1 && pixel_info_ticker != 2){
         fprintf(stderr,"Invalid operand.\n");
         goto done;
     }
-    if (option != 1 && option != 2 && option != 3 && option != 4 && option != 5){
+    if (option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option != 6 && option != 7){
         fprintf(stderr,"Invalid operand.\n");
         goto done;
     }
@@ -277,6 +292,20 @@ int main()
                 putc(pixels[i].b,outfile);
                 putc(pixels[i].g,outfile);
                 putc(pixels[i].r,outfile);
+                putc(pixels[i].a,outfile);
+            }
+        }
+        else if (option == 6 || option == 7){
+            if (option == 6){
+                putc(pixels[i].b * dl_value,outfile);
+                putc(pixels[i].g * dl_value,outfile);
+                putc(pixels[i].r * dl_value,outfile);
+                putc(pixels[i].a,outfile);
+            }
+            else{
+                putc(pixels[i].b * (dl_value + 1),outfile);
+                putc(pixels[i].g * (dl_value + 1),outfile);
+                putc(pixels[i].r * (dl_value + 1),outfile);
                 putc(pixels[i].a,outfile);
             }
         }
