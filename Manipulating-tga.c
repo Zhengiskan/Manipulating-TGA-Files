@@ -194,7 +194,9 @@ int main()
         putc(pixels[i].g,outfile);
         putc(pixels[i].r,outfile);
         putc(pixels[i].a,outfile);
+        printf("R: %d; G: %d; B: %d\n", pixels[i].r, pixels[i].g, pixels[i].b);
     }
+    goto finish;
 
 //    pix.data = (ubyte*)malloc(image_size);
 //    memcpy(pix.data, data + 18, image_size);
