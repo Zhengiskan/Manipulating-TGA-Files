@@ -210,6 +210,7 @@ int main()
         fprintf(stderr, "Invalid TGA file size.\n");
         goto done;
     }
+
     fseek(fp, 0, SEEK_SET);
     num_bytes = header.bitsperpixel / 8;
     while (n < header.width * header.height) {
