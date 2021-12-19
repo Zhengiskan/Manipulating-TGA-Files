@@ -68,6 +68,7 @@ int main()
         return -1;
     }
 
+    printf("File Open Successful.\nPrinting file header information.\n");
     header.idlength = fgetc(fp);
     fprintf(stdout,"ID length:         %d\n",header.idlength);
 
@@ -103,8 +104,6 @@ int main()
 
     header.imagedescriptor = fgetc(fp);
     fprintf(stdout,"Descriptor:        %d\n",header.imagedescriptor);
-
-    printf("Starting Image manipulation........\n");
 
     pixels = malloc(header.width*header.height*sizeof(PIXEL));
 
@@ -153,6 +152,44 @@ int main()
         goto done;
     }
 
+    printf("Starting Image manipulation........\n");
+    int pixel_info_ticker;
+    printf("Please Choose:\n[1]: With Pixel details\n[2]: Without Pixel details\n");
+    scanf("%d", &pixel_info_ticker);
+
+    int option;
+    printf("Please Input Image Manipulation option\n");
+    printf("Please Choose:\n"
+           "[1]: Swap Red with Green\n"
+           "[2]: Swap Red with Blue\n"
+           "[3]: Swap Green with Blue\n"
+           "[4]: Change Red to different color.\n"
+           "[5]: Swap Specific Color with another Specific Color\n");
+    scanf("%d", &option);
+
+    int target_r, target_g, target_b, self_r, self_g, self_b;
+
+    if (option == 4){
+        printf("Enter a color code in RGB order that you wish to change red to:\nEx:lime: 0 255 0\n");
+        scanf("%d %d %d", &target_r, &target_g, &target_b);
+    }
+
+    if (option == 5){
+        printf("Enter a color code in RGB order that you wish to change:\nEx:lime: 0 255 0\n");
+        scanf("%d %d %d", &self_r, &self_g, &self_b);
+        printf("Enter a color code in RGB order that you wish to change the color to:\nEx:lime: 0 255 0\n");
+        scanf("%d %d %d", &target_r, &target_g, &target_b);
+    }
+
+    if (pixel_info_ticker != 1 && pixel_info_ticker != 2){
+        fprintf(stderr,"Invalid operand.\n");
+        goto done;
+    }
+    if (option != 1 && option != 2 && option != 3 && option != 4 && option != 5){
+        fprintf(stderr,"Invalid operand.\n");
+        goto done;
+    }
+
     size_t image_size = pix.width * pix.height * pix.format / 8;
     if ((tga_header_size + image_size) > fsize) {
         fprintf(stderr, "Invalid TGA file size.\n");
@@ -175,6 +212,7 @@ int main()
         fprintf(stderr,"Failed to open output file\n");
         exit(-1);
     }
+
     putc(0,outfile);
     putc(0,outfile);
     putc(2,outfile);                         /* uncompressed RGB */
@@ -189,12 +227,68 @@ int main()
     putc((header.height & 0xFF00) / 256,outfile);
     putc(32,outfile);                        /* 24 bit bitmap */
     putc(0,outfile);
+    int x =0, y=0;
     for (int i=0;i<header.height*header.width;i++) {
-        putc(pixels[i].b,outfile);
-        putc(pixels[i].g,outfile);
-        putc(pixels[i].r,outfile);
-        putc(pixels[i].a,outfile);
-        printf("R: %d; G: %d; B: %d\n", pixels[i].r, pixels[i].g, pixels[i].b);
+
+//        putc(pixels[i].b,outfile);
+//        putc(pixels[i].g,outfile);
+//        putc(pixels[i].r,outfile);
+//        putc(pixels[i].a,outfile);
+        if (option == 1){
+            putc(pixels[i].b,outfile);
+            putc(pixels[i].r,outfile);
+            putc(pixels[i].g,outfile);
+            putc(pixels[i].a,outfile);
+        }
+        else if (option == 2){
+            putc(pixels[i].r,outfile);
+            putc(pixels[i].g,outfile);
+            putc(pixels[i].b,outfile);
+            putc(pixels[i].a,outfile);
+        }
+        else if (option == 3){
+            putc(pixels[i].g,outfile);
+            putc(pixels[i].b,outfile);
+            putc(pixels[i].r,outfile);
+            putc(pixels[i].a,outfile);
+        }
+        else if (option == 4){
+            if (pixels[i].r == 255 && pixels[i].g == 0 && pixels[i].b == 0){
+                putc(target_b,outfile);
+                putc(target_g,outfile);
+                putc(target_r,outfile);
+                putc(pixels[i].a,outfile);
+            }
+            else{
+                putc(pixels[i].b,outfile);
+                putc(pixels[i].g,outfile);
+                putc(pixels[i].r,outfile);
+                putc(pixels[i].a,outfile);
+            }
+        }
+        else if (option == 5){
+            if (pixels[i].r == self_r && pixels[i].g == self_g && pixels[i].b == self_b){
+                putc(target_b,outfile);
+                putc(target_g,outfile);
+                putc(target_r,outfile);
+                putc(pixels[i].a,outfile);
+            }
+            else{
+                putc(pixels[i].b,outfile);
+                putc(pixels[i].g,outfile);
+                putc(pixels[i].r,outfile);
+                putc(pixels[i].a,outfile);
+            }
+        }
+
+        if (pixel_info_ticker == 1){
+            printf("color at (%d, %d) [R: %d; G: %d; B: %d]\n", x, y,pixels[i].r, pixels[i].g, pixels[i].b);
+            if (y == header.width){
+                x++;
+                y=0;
+            }
+            else{y++;}
+        }
     }
     goto finish;
 
@@ -214,11 +308,11 @@ int main()
 //    fwrite(pix.data, 1, image_size, outfile);
 //    goto finish;
 
-    done:
-    fclose(outfile);
-
     finish:
     printf("Process finished, Thank you for using our service.\n");
+
+    done:
+    fclose(outfile);
 
     free(pix.data);
     free(data);
